@@ -1,0 +1,644 @@
+/* ==========================================================================
+   Nagesh Jayache, portfolio stylesheet
+   --------------------------------------------------------------------------
+   Table of contents
+   1. DESIGN TOKENS     colours, fonts, spacing: change the look from here
+   2. BASE              reset, page, starfield background
+   3. FIXED UI          top bar, side dots, counter
+   4. SECTIONS          shared full-screen section styles
+   5. CONTENT BLOCKS    intro, about, skills, experience, projects, contact
+   6. REFINEMENTS       gradients, moon, scroll-reveal, progress bar
+   ========================================================================== */
+
+/* 1. DESIGN TOKENS
+   CSS custom properties (variables). The light theme lives in the first :root.
+   Dark values are applied when the visitor's device prefers dark mode,
+   or when the Theme button sets data-theme="dark" on <html>. */
+:root {
+  --bg: #f4f3f0;
+  --ink: #121118;
+  --muted: #5f5b66;
+  --line: rgba(0,0,0,.16);
+  --accent: #b45309;
+  --gold2: #d97706;
+  --sa: url("../assets/stars-light-a.svg");
+  --sb: url("../assets/stars-light-b.svg");
+  --serif: "Instrument Serif",Georgia,"Times New Roman",serif;
+  --body: "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono: "IBM Plex Mono",ui-monospace,Menlo,monospace;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top,0px);
+  padding-bottom: env(safe-area-inset-bottom,0px);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #050507;
+    --ink: #f5f1e8;
+    --muted: #a29d92;
+    --line: rgba(255,255,255,.18);
+    --accent: #ffd166;
+    --gold2: #fff0c2;
+    --sa: url("../assets/stars-dark-a.svg");
+    --sb: url("../assets/stars-dark-b.svg");
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #050507;
+  --ink: #f5f1e8;
+  --muted: #a29d92;
+  --line: rgba(255,255,255,.18);
+  --accent: #ffd166;
+  --gold2: #fff0c2;
+  --sa: url("../assets/stars-dark-a.svg");
+  --sb: url("../assets/stars-dark-b.svg");
+}
+
+/* 2. BASE: reset + page-wide behaviour (scroll snapping, starfield background) */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-snap-type: y proximity;
+  scroll-behavior: smooth;
+  scroll-padding-top: 0;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 1.0625rem/1.6 var(--body);
+  position: relative;
+  isolation: isolate;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: var(--sa),var(--sb);
+  background-size: 700px 700px,960px 960px;
+  background-position: 0 0,260px 180px;
+  animation: tw 8s ease-in-out infinite alternate;
+}
+
+@keyframes tw {
+  from {
+    opacity: .5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* 3. FIXED UI: top bar, side dots, section counter */
+.top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: calc(env(safe-area-inset-top,0px) + 14px) clamp(20px,5vw,44px) 14px;
+  pointer-events: none;
+}
+
+.top>* {
+  pointer-events: auto;
+}
+
+.mk {
+  font: .8rem var(--mono);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.tbtn {
+  font: .82rem var(--mono);
+  background: var(--bg);
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 14px;
+  cursor: pointer;
+}
+
+.tbtn:hover {
+  color: var(--ink);
+  border-color: var(--accent);
+}
+
+.dots {
+  position: fixed;
+  right: clamp(10px,2.4vw,28px);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dots a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 28px;
+  height: 22px;
+  text-decoration: none;
+}
+
+.dots a::after {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink);
+  opacity: .55;
+  transition: all .2s;
+}
+
+.dots a[aria-current="true"]::after {
+  background: var(--accent);
+  border-color: var(--accent);
+  opacity: 1;
+  transform: scale(1.35);
+  box-shadow: 0 0 12px var(--accent);
+}
+
+.dots a span {
+  position: absolute;
+  right: 30px;
+  font: .72rem var(--mono);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 1px 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .15s;
+  white-space: nowrap;
+}
+
+.dots a:hover span,
+.dots a:focus-visible span {
+  opacity: 1;
+}
+
+.cnt {
+  position: fixed;
+  left: clamp(20px,5vw,44px);
+  bottom: calc(env(safe-area-inset-bottom,0px) + 16px);
+  z-index: 5;
+  font: .8rem var(--mono);
+  letter-spacing: .14em;
+  color: var(--muted);
+}
+
+/* 4. SECTIONS: every full-screen block shares these rules */
+.sc {
+  min-height: 100vh;
+  min-height: 100svh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 96px clamp(20px,8vw,120px) 80px;
+  position: relative;
+}
+
+.sc+.sc {
+  border-top: 1px solid var(--line);
+}
+
+/* 5. CONTENT BLOCKS: intro, about, skills, experience, projects, contact */
+.lab {
+  font: .8rem var(--mono);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 26px;
+}
+
+h1 {
+  font: 400 clamp(3.6rem,15vw,12.5rem)/.86 var(--serif);
+  letter-spacing: -.035em;
+  margin: 0;
+}
+
+/* 6. REFINEMENTS: gold gradients, moon + ring, scroll-reveal, progress bar */
+h1 em {
+  color: var(--accent);
+}
+
+.sub {
+  font: 400 clamp(1.1rem,2.2vw,1.6rem) var(--body);
+  color: var(--muted);
+  margin: 34px 0 0;
+  max-width: 34ch;
+}
+
+.cue {
+  margin-top: 44px;
+  font: .85rem var(--mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  animation: nudge 1.8s ease-in-out infinite;
+}
+
+@keyframes nudge {
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+.big {
+  font: 400 clamp(1.8rem,4.6vw,3.9rem)/1.14 var(--serif);
+  letter-spacing: -.015em;
+  margin: 0 0 30px;
+  max-width: 26em;
+}
+
+.big em {
+  color: var(--accent);
+}
+
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 34px;
+  font: .85rem var(--mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.facts b {
+  color: var(--ink);
+  font-weight: 400;
+}
+
+.sk {
+  margin: 0 0 22px;
+}
+
+.sk h3 {
+  font: .78rem var(--mono);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 400;
+  margin: 0 0 4px;
+}
+
+.sk ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font: 400 clamp(1.5rem,3.7vw,2.9rem)/1.2 var(--serif);
+}
+
+.sk li {
+  display: inline;
+}
+
+.sk li:not(:last-child)::after {
+  content: " · ";
+  color: var(--accent);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(120px,.35fr) 1fr;
+  gap: 8px 32px;
+  padding: 22px 0;
+  border-top: 1px solid var(--line);
+}
+
+.row:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.yr {
+  font: 400 clamp(1.7rem,4.2vw,3.4rem)/1.05 var(--serif);
+  color: var(--accent);
+}
+
+.row h3 {
+  font: 400 clamp(1.5rem,3vw,2.3rem)/1.15 var(--serif);
+  margin: 0;
+}
+
+.row .org {
+  color: var(--muted);
+  margin: 2px 0 8px;
+}
+
+.row p {
+  margin: 0;
+  max-width: 56ch;
+}
+
+@media (max-width: 640px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pj {
+  padding: 22px 0;
+  border-top: 1px solid var(--line);
+}
+
+.pj:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.pj a.t {
+  display: inline-block;
+  font: 400 clamp(2.8rem,9vw,7.6rem)/.95 var(--serif);
+  letter-spacing: -.03em;
+  text-decoration: none;
+}
+
+.pj a.t:hover {
+  color: var(--accent);
+  font-style: italic;
+}
+
+.pj a.t sup {
+  font: .9rem var(--mono);
+  color: var(--accent);
+  margin-left: 8px;
+  letter-spacing: .1em;
+}
+
+.pj .d {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 6px 32px;
+  margin-top: 10px;
+  align-items: start;
+}
+
+@media (max-width: 760px) {
+  .pj .d {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pj p {
+  margin: 0;
+  max-width: 52ch;
+}
+
+.pj .st {
+  font: .82rem var(--mono);
+  letter-spacing: .06em;
+  color: var(--muted);
+}
+
+.pj .st a {
+  color: var(--accent);
+  margin-right: 14px;
+}
+
+.mail {
+  font: 400 clamp(1.5rem,6.2vw,5.6rem)/1.05 var(--serif);
+  letter-spacing: -.025em;
+  overflow-wrap: anywhere;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 8px;
+  text-decoration-color: var(--accent);
+  display: block;
+}
+
+.mail:hover {
+  color: var(--accent);
+}
+
+.ln {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 32px;
+  margin-top: 34px;
+  font: .9rem var(--mono);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.ln a {
+  text-underline-offset: 6px;
+}
+
+.ln a:hover {
+  color: var(--accent);
+}
+
+.fine {
+  margin-top: 60px;
+  color: var(--muted);
+  font-size: .88rem;
+}
+
+@media (max-width: 600px) {
+  .dots {
+    display: none;
+  }
+}
+
+/* ACCESSIBILITY: turn animations off if the visitor asked for less motion */
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  .cue {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+h1 em {
+  background: linear-gradient(100deg,var(--accent),var(--gold2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-right: .06em;
+}
+
+.big em {
+  background: linear-gradient(100deg,var(--accent),var(--gold2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+#c0 {
+  overflow: hidden;
+}
+
+#c0::before {
+  content: "";
+  position: absolute;
+  right: -8%;
+  top: 10%;
+  width: min(58vw,620px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 36% 30%,color-mix(in srgb,var(--accent) 26%,transparent),color-mix(in srgb,var(--accent) 6%,transparent) 45%,transparent 68%);
+  pointer-events: none;
+}
+
+#c0::after {
+  content: "";
+  position: absolute;
+  right: -22%;
+  top: -2%;
+  width: min(82vw,880px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  pointer-events: none;
+  box-shadow: 0 0 0 70px transparent,0 0 0 71px var(--line);
+}
+
+#c0>* {
+  position: relative;
+  z-index: 1;
+}
+
+.lab {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.lab::after {
+  content: "";
+  height: 1px;
+  width: min(18vw,170px);
+  background: linear-gradient(90deg,var(--accent),transparent);
+}
+
+.sub {
+  font-weight: 400;
+  letter-spacing: .01em;
+  line-height: 1.7;
+}
+
+.cue {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: .75rem;
+}
+
+.cue::before {
+  content: "";
+  width: 1px;
+  height: 46px;
+  background: linear-gradient(var(--accent),transparent);
+}
+
+.sk {
+  display: grid;
+  grid-template-columns: minmax(110px,.26fr) 1fr;
+  gap: 4px 32px;
+  align-items: baseline;
+  padding: 14px 0;
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+
+.sk:last-of-type {
+  border-bottom: 1px solid var(--line);
+}
+
+.sk h3 {
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .sk {
+    grid-template-columns: 1fr;
+  }
+}
+
+.row .yr,
+.pj a.t sup {
+  font-style: italic;
+}
+
+.pj a.t {
+  transition: letter-spacing .4s ease,color .3s;
+}
+
+.pj a.t:hover {
+  letter-spacing: -.01em;
+}
+
+.facts span {
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+}
+
+.prog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(90deg,var(--accent),var(--gold2));
+  z-index: 6;
+}
+
+.cnt {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  letter-spacing: .12em;
+  font-style: italic;
+}
+
+/* Scroll-reveal: hidden first, then .in is added by script.js */
+.js .rv {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 1.1s cubic-bezier(.2,.7,.2,1),transform 1.1s cubic-bezier(.2,.7,.2,1);
+  transition-delay: var(--d,0s);
+}
+
+.js .rv.in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .rv {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

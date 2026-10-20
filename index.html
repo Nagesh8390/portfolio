@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Nagesh Jayache | Java Full Stack Developer</title>
+  <meta name="description" content="Portfolio of Nagesh Jayache, a Java Full Stack developer from Pune building web applications with Java, Spring Boot, React and MySQL.">
+  <meta name="theme-color" content="#050507">
+  <meta property="og:title" content="Nagesh Jayache | Java Full Stack Developer">
+  <meta property="og:description" content="Java, Spring Boot, React and MySQL. See my projects, skills and experience.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%AD%90%3C/text%3E%3C/svg%3E">
+
+  <!-- Fonts: Instrument Serif (headings), IBM Plex Sans (body), IBM Plex Mono (small labels) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Runs immediately, before the page paints, so there is no flash of the wrong theme.
+       1) adds class "js" so scroll-reveal styles only apply when JavaScript works
+       2) restores the theme the visitor chose last time -->
+  <script>
+    document.documentElement.classList.add('js');
+    try {
+      var saved = localStorage.getItem('theme');
+      if (saved === 'light' || saved === 'dark') document.documentElement.setAttribute('data-theme', saved);
+    } catch (e) {}
+  </script>
+  <script src="js/script.js" defer></script>
+</head>
+<body>
+
+  <!-- ===== Fixed UI (stays on screen while you scroll) ===== -->
+  <div class="top">
+    <span class="mk">NJ</span>
+    <button class="tbtn" id="themeBtn" type="button" aria-label="Switch between light and dark theme">Theme</button>
+  </div>
+
+  <nav class="dots" aria-label="Sections">
+    <a href="#c0" aria-label="Intro" aria-current="true"><span>Intro</span></a>
+    <a href="#c1" aria-label="About"><span>About</span></a>
+    <a href="#c2" aria-label="Skills"><span>Skills</span></a>
+    <a href="#c3" aria-label="Experience"><span>Experience</span></a>
+    <a href="#c4" aria-label="Projects"><span>Projects</span></a>
+    <a href="#c5" aria-label="Contact"><span>Contact</span></a>
+  </nav>
+
+  <div class="cnt" id="cnt" aria-hidden="true">I / VI</div>
+  <div class="prog" id="prog" aria-hidden="true"></div>
+
+  <main>
+
+    <!-- ===== I. Intro ===== -->
+    <section class="sc" id="c0" aria-label="Intro">
+      <h1>Nagesh<br><em>Jayache</em></h1>
+      <p class="sub">Java Full Stack Developer from Pune, building complete web applications.</p>
+      <p class="cue">I — Scroll</p>
+    </section>
+
+    <!-- ===== II. About ===== -->
+    <section class="sc" id="c1" aria-label="About">
+      <p class="lab">II — About</p>
+      <p class="big">I'm a Java Full Stack developer with a degree in <em>Computer Engineering</em> and strong fundamentals in Core Java, OOP, and SQL. I've built full web apps, and I'm now going deeper into <em>Spring Boot</em> and DSA.</p>
+      <div class="facts">
+        <span>CGPA <b>8.37</b></span>
+        <span>Internships <b>2</b></span>
+        <span>Class of <b>2026</b></span>
+        <span>Open to <b>entry-level roles</b></span>
+      </div>
+    </section>
+
+    <!-- ===== III. Skills ===== -->
+    <section class="sc" id="c2" aria-label="Skills">
+      <p class="lab">III — Skills</p>
+      <div class="sk"><h3>Backend</h3><ul><li>Java</li><li>Core Java</li><li>Advanced Java</li><li>JDBC</li><li>Servlets</li><li>JSP</li><li>Spring Boot</li></ul></div>
+      <div class="sk"><h3>Frontend</h3><ul><li>React</li><li>JavaScript</li><li>HTML5</li><li>CSS3</li></ul></div>
+      <div class="sk"><h3>Data</h3><ul><li>MySQL</li><li>Oracle SQL</li></ul></div>
+      <div class="sk"><h3>Tools</h3><ul><li>Git</li><li>GitHub</li><li>VS Code</li><li>Netlify</li><li>Render</li></ul></div>
+      <div class="sk"><h3>Foundations</h3><ul><li>OOP</li><li>Collections</li><li>Multithreading</li><li>DSA</li></ul></div>
+    </section>
+
+    <!-- ===== IV. Experience ===== -->
+    <section class="sc" id="c3" aria-label="Experience">
+      <p class="lab">IV — Experience</p>
+      <div class="row">
+        <div class="yr">2026 —</div>
+        <div><h3>Java Full Stack Intern</h3><p class="org">QSpiders, Pune</p><p>Training in Core Java, Advanced Java, OOP, collections, SQL, and web development. Practising DSA and learning Spring Boot.</p></div>
+      </div>
+      <div class="row">
+        <div class="yr">2024 – 25</div>
+        <div><h3>MERN Stack Intern</h3><p class="org">Scalefull Technologies, Pune</p><p>Structured training in MongoDB, Express.js, React, and Node.js.</p></div>
+      </div>
+      <div class="row">
+        <div class="yr">2022 – 26</div>
+        <div><h3>B.E. Computer Engineering</h3><p class="org">Savitribai Phule Pune University</p><p>Graduated with a CGPA of 8.37.</p></div>
+      </div>
+    </section>
+
+    <!-- ===== V. Projects ===== -->
+    <section class="sc" id="c4" aria-label="Projects">
+      <p class="lab">V — Projects</p>
+      <div class="pj">
+        <a class="t" href="https://ev-connect.netlify.app/">EVConnect<sup>LIVE ↗</sup></a>
+        <div class="d">
+          <p>EV charging station booking platform. Drivers find nearby stations on an interactive map and book a slot, with availability managed so a slot can't be booked twice.</p>
+          <p class="st">Java · Spring Boot · MySQL · React<br><a href="https://ev-connect.netlify.app/">Live demo</a><a href="https://github.com/Nagesh8390">GitHub</a></p>
+        </div>
+      </div>
+      <div class="pj">
+        <a class="t" href="https://github.com/Nagesh8390">Tour &amp; Travels<sup>GITHUB ↗</sup></a>
+        <div class="d">
+          <p>Hotel and cruise booking system. Visitors browse packages and stays, compare pricing and package details, and view their booking information.</p>
+          <p class="st">Java · JavaScript · MySQL · React<br><a href="https://github.com/Nagesh8390">GitHub</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== VI. Contact ===== -->
+    <section class="sc" id="c5" aria-label="Contact">
+      <p class="lab">VI — Contact</p>
+      <p class="big" style="margin-bottom:20px">Open to entry-level Software Engineer and Java Full Stack roles. Say hello:</p>
+      <a class="mail" href="mailto:nagesh.b.jayache@gmail.com">nagesh.b.jayache@gmail.com</a>
+      <div class="ln">
+        <a href="https://linkedin.com/in/nageshjayache">LinkedIn</a>
+        <a href="https://github.com/Nagesh8390">GitHub</a>
+      </div>
+      <p class="fine">✦ © <span id="yr">2026</span> Nagesh Jayache · Pune, Maharashtra</p>
+    </section>
+
+  </main>
+</body>
+</html>
